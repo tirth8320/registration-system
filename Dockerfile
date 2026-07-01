@@ -1,24 +1,30 @@
-# ---------- Build Stage ----------
-FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+# -------------------------
+# BUILD STAGE
+# -------------------------
+FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview AS build
 
 WORKDIR /src
 
-COPY registration.csproj ./
-RUN dotnet restore
-
 COPY . .
 
-RUN dotnet publish registration.csproj -c Release -o /app/publish
+RUN dotnet restore registration.csproj
 
-# ---------- Runtime Stage ----------
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview
+RUN dotnet publish registration.csproj \
+    -c Release \
+    -o /app/publish \
+    --no-restore
+
+# -------------------------
+# RUNTIME STAGE
+# -------------------------
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:10.0-preview
 
 WORKDIR /app
 
 COPY --from=build /app/publish .
 
-ENV ASPNETCORE_URLS=http://+:10000
+ENV ASPNETCORE_URLS=http://+:8080
 
-EXPOSE 10000
+EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "registration.dll"]
+ENTRYPOINT ["dotnet","registration.dll"]
