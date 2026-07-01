@@ -1,0 +1,478 @@
+﻿@model List<registration.Models.UserDocument>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    }
+
+    .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+        font-family: 'Syne',sans-serif;
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1A1A2E;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .title-icon {
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg,#6C63FF,#8B5CF6);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(108,99,255,0.3);
+    }
+
+    .user-count-pill {
+        background: rgba(108,99,255,0.1);
+        color: #6C63FF;
+        border-radius: 50px;
+        padding: 0.25rem 0.9rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border: 1px solid rgba(108,99,255,0.2);
+    }
+
+    .search-wrapper {
+        position: relative;
+        width: 320px;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9898B5;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.55rem 1rem 0.55rem 2.4rem;
+        border: 1.5px solid rgba(108,99,255,0.18);
+        border-radius: 50px;
+        font-size: 0.88rem;
+        background: white;
+    }
+
+    .table-card {
+        background: white;
+        border: 1px solid rgba(108,99,255,0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(108,99,255,0.09);
+    }
+
+        .table-card thead tr {
+            background: linear-gradient( 135deg, rgba(108,99,255,0.06), rgba(56,189,248,0.06) );
+        }
+
+        .table-card thead th {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9898B5;
+            padding: 1rem 1.2rem;
+            border: none;
+        }
+
+        .table-card tbody td {
+            padding: 0.9rem 1.2rem;
+            border-bottom: 1px solid rgba(108,99,255,0.05);
+            font-size: 0.88rem;
+            color: #4A4A6A;
+        }
+
+    .user-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#6C63FF,#8B5CF6);
+        color: white;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-name {
+        font-weight: 600;
+        color: #1A1A2E;
+    }
+
+    .user-id {
+        font-size: 0.75rem;
+        color: #9898B5;
+    }
+
+    .badge-user {
+        background: linear-gradient(135deg,#6C63FF,#38BDF8);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .badge-admin {
+        background: linear-gradient(135deg,#FF6B6B,#FF8E53);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .badge-none {
+        background: #F0F1FA;
+        color: #9898B5;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .action-btns {
+        display: flex;
+        gap: 0.4rem;
+    }
+
+    .btn-edit {
+        background: rgba(108,99,255,0.1);
+        color: #6C63FF;
+        border-radius: 8px;
+        padding: 0.38rem 0.9rem;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .btn-delete {
+        background: rgba(255,107,107,0.1);
+        color: #FF6B6B;
+        border-radius: 8px;
+        padding: 0.38rem 0.9rem;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .table-footer {
+        padding: 0.9rem 1.5rem;
+        border-top: 1px solid rgba(108,99,255,0.07);
+        display: flex;
+        justify-content: space-between;
+        color: #9898B5;
+        font-size: 0.82rem;
+
+
+        .doc-view-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: #f1efff;
+            color: #6C63FF;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+            .doc-view-btn:hover {
+                background: #e6e3ff;
+                color: #5a50ff;
+            }
+
+        .doc-download-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: #eafaf1;
+            color: #16a34a;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+            .doc-download-btn:hover {
+                background: #dff7ea;
+                color: #15803d;
+            }
+    }
+
+</style>
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <div class="title-icon">
+                <i class="bi bi-file-earmark-check"></i>
+            </div>
+            Document Verification
+            <span class="user-count-pill">@Model.Count Documents</span>
+        </h1>
+
+        <p style="color:#9898B5;font-size:0.85rem;margin:0.4rem 0 0 3.2rem;">
+            Verify uploaded user documents
+        </p>
+    </div>
+
+    <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text"
+               class="search-input"
+               id="searchInput"
+               placeholder="Search users..." />
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-responsive">
+
+        <table class="table" style="table-layout:fixed;width:100%; id="documentTable">
+
+            <thead>
+                <tr>
+                    <th><i class="bi bi-hash me-1"></i>User</th>
+                    <th style="width:15%">AADHAAR</th>
+                    <th style="width:15%">PAN</th>
+                    <th style="width:15%">OTHER</th>
+                    <th style="width:10%">STATUS</th>
+                    <th style="width:30%">ACTIONS</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="user-cell">
+
+                                <div class="user-avatar">
+                                    @(item.UserMaster.FullName[0].ToString().ToUpper())
+                                </div>
+
+                                <div>
+                                    <div class="user-name">
+                                        @item.UserMaster.FullName
+                                    </div>
+
+                                    <div class="user-id">
+                                        #@item.DocumentId
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        
+
+                        <td style="white-space: nowrap;">
+
+                            <a href="@item.AadhaarPath"
+                                target="_blank"
+                                style="
+                                display:inline-block;
+                                padding:4px 8px;
+                                border-radius:6px;
+                                background:#f1efff;
+                                color:#6C63FF;
+                                font-size:12px;
+                                font-weight:600;
+                                text-decoration:none;">
+                                👁 View
+                            </a>
+
+                            <a href="@item.AadhaarPath"
+                                download
+                                style="
+                                display:inline-block;
+                                padding:4px 8px;
+                                border-radius:6px;
+                                background:#eafaf1;
+                                color:#16a34a;
+                                font-size:12px;
+                                font-weight:600;
+                                text-decoration:none;
+                                margin-left:3px;">
+                                ⬇ PDF
+                            </a>
+
+                        </td>
+
+                       
+
+                     
+                            <td style="white-space: nowrap;">
+
+                                <a href="@item.PanPath"
+                                   target="_blank"
+                                   style="
+                                    display:inline-block;
+                                    padding:5px 10px;
+                                    border-radius:8px;
+                                    background:#f1efff;
+                                    color:#6C63FF;
+                                    font-size:13px;
+                                    font-weight:600;
+                                    text-decoration:none;">
+                                    👁 View
+                                </a>
+
+                                <a href="@item.PanPath"
+                                   download
+                                   style="
+                                    display:inline-block;
+                                    padding:5px 10px;
+                                    border-radius:8px;
+                                    background:#eafaf1;
+                                    color:#16a34a;
+                                    font-size:13px;
+                                    font-weight:600;
+                                    text-decoration:none;
+                                    margin-left:4px;">
+                                    ⬇ PDF
+                                </a>
+
+                            </td>
+
+                        
+
+                       
+
+                            <td style="white-space: nowrap;">
+
+                                <a href="@item.OtherDocumentPath"
+                                   target="_blank"
+                                   style="
+                                    display:inline-block;
+                                    padding:5px 10px;
+                                    border-radius:8px;
+                                    background:#f1efff;
+                                    color:#6C63FF;
+                                    font-size:13px;
+                                    font-weight:600;
+                                    text-decoration:none;">
+                                    👁 View
+                                </a>
+
+                                <a href="@item.OtherDocumentPath"
+                                   download
+                                   style="
+                                    display:inline-block;
+                                    padding:5px 10px;
+                                    border-radius:8px;
+                                    background:#eafaf1;
+                                    color:#16a34a;
+                                    font-size:13px;
+                                    font-weight:600;
+                                    text-decoration:none;
+                                    margin-left:4px;">
+                                    ⬇ PDF
+                                </a>
+
+                            </td>
+
+                
+
+                        <td>
+
+                            @if (item.Status == "Approved")
+                            {
+                                <span class="badge-user">
+                                    Approved
+                                </span>
+                            }
+                            else if (item.Status == "Rejected")
+                            {
+                                <span class="badge-admin">
+                                    Rejected
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-none">
+                                    Pending
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <div class="action-btns">
+
+                                <a asp-action="Approve"
+                                   asp-route-id="@item.DocumentId"
+                                   class="btn-edit">
+                                    <i class="bi bi-check-lg"></i>
+                                    Approve
+                                </a>
+
+                                <a asp-action="Reject"
+                                   asp-route-id="@item.DocumentId"
+                                   class="btn-delete">
+                                    <i class="bi bi-x-lg"></i>
+                                    Reject
+                                </a>
+
+                                <a asp-action="DeleteDocument"
+                                   asp-route-id="@item.DocumentId"
+                                   class="btn-delete"
+                                   onclick="return confirm('Delete document?')">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="table-footer">
+
+        <span>
+            Showing @Model.Count of @Model.Count documents
+        </span>
+
+        <span style="color:#6C63FF;">
+            <i class="bi bi-shield-check"></i>
+            Admin Dashboard
+        </span>
+
+    </div>
+
+</div>

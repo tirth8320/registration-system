@@ -1,0 +1,787 @@
+﻿@{
+    ViewData["Title"] = "Document Upload";
+}
+
+<style>
+
+    .upload-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .upload-card {
+        background: white;
+        border-radius: 24px;
+        padding: 25px;
+        box-shadow: 0 15px 35px rgba(108,99,255,.08);
+        border: 1px solid #eef0ff;
+    }
+
+    .upload-title {
+        font-size: 36px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 10px;
+    }
+
+    .upload-subtitle {
+        color: #8b8bb0;
+        margin-bottom: 25px;
+    }
+
+    .document-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .document-box {
+        background: #fafbff;
+        border: 2px dashed #d7d9ff;
+        border-radius: 20px;
+        padding: 25px;
+        min-height: 100px;
+        text-align: center;
+        transition: .3s;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .document-box:hover {
+            transform: translateY(-4px);
+            border-color: #6C63FF;
+            box-shadow: 0 10px 25px rgba(108,99,255,.12);
+        }
+
+    .document-icon {
+        font-size: 55px;
+        margin-bottom: 12px;
+    }
+
+    .document-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 15px;
+    }
+
+    .document-name {
+        border: 1px solid #d7d9ff;
+        border-radius: 12px;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .drop-zone {
+        position: relative;
+        border: 2px dashed #6C63FF;
+        border-radius: 16px;
+        min-height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        cursor: pointer;
+        transition: .3s;
+        margin-top: auto;
+    }
+
+        .drop-zone:hover {
+            background: #f4f3ff;
+        }
+
+    .drop-zone--over {
+        background: #f0eeff;
+    }
+
+    .drop-zone__input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .drop-zone__prompt {
+        color: #6C63FF;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .drop-zone__thumb {
+        color: #22c55e;
+        font-weight: 700;
+        padding: 15px;
+        text-align: center;
+        word-break: break-word;
+    }
+
+    .add-document-card {
+        border: 2px dashed #6C63FF;
+        background: #f8f7ff;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .add-document-card:hover {
+            background: #f0eeff;
+        }
+
+    .add-document-icon {
+        font-size: 70px;
+        color: #6C63FF;
+    }
+
+    .add-document-text {
+        margin-top: 15px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #6C63FF;
+    }
+
+    .submit-btn {
+        width: 100%;
+        margin-top: 25px;
+        border: none;
+        border-radius: 14px;
+        padding: 16px;
+        font-size: 18px;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg,#6C63FF,#8B5CF6);
+    }
+
+    @@media(max-width:992px) {
+        .document-grid {
+            grid-template-columns: repeat(2,1fr);
+        }
+    }
+
+    @@media(max-width:768px) {
+        .document-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger"
+         style="
+        max-width:1200px;
+        margin:20px auto;
+        border-radius:12px;
+        font-weight:600;">
+
+        ❌ @TempData["Error"]
+
+    </div>
+}
+
+
+@* @if (ViewBag.Progress != null)
+{
+    <div style="
+        max-width:1200px;
+        margin:20px auto;
+        background:white;
+        padding:20px;
+        border-radius:16px;
+        box-shadow:0 8px 20px rgba(0,0,0,.06);">
+
+        <h4 style="font-weight:700;">
+            Profile Completion
+        </h4>
+
+        <div class="progress"
+             style="height:25px;border-radius:12px;">
+
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width:@ViewBag.Progress%;">
+
+                @ViewBag.Progress%
+
+            </div>
+
+        </div>
+
+    </div>
+} *@
+@* 
+<div class="mt-3">
+
+    @if (ViewBag.MainDocument != null)
+    {
+        <div>
+
+            @(string.IsNullOrEmpty(ViewBag.MainDocument.AadhaarPath)
+                ? "❌ Aadhaar Missing"
+                : "✅ Aadhaar Uploaded")
+
+        </div>
+
+        <div>
+
+            @(string.IsNullOrEmpty(ViewBag.MainDocument.PanPath)
+                ? "❌ PAN Missing"
+                : "✅ PAN Uploaded")
+
+        </div>
+
+        <div>
+
+            @(ViewBag.DocumentStatus == "Pending"
+                ? "⏳ Waiting For Approval"
+                : ViewBag.DocumentStatus == "Approved"
+                    ? "✅ Approved"
+                    : "❌ Rejected")
+
+        </div>
+    }
+
+</div> *@
+
+
+
+<div class="upload-container">
+    
+
+    
+    <div class="upload-card">
+
+        <h1 class="upload-title">
+            Document Verification
+        </h1>
+
+        <p class="upload-subtitle">
+            Upload all required documents for verification.
+        </p>
+
+        <form asp-controller="Document"
+              asp-action="Upload"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div class="document-grid" id="documentGrid">
+
+                <div class="document-box">
+                    <div class="document-icon">🪪</div>
+                    <div class="document-title">Aadhaar Card</div>
+                    <div style="
+                        color:#6b7280;
+                        font-size:13px;
+                        margin-bottom:10px;">
+                        PDF only • Max 2 MB
+                    </div>
+
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">
+                            Drag & Drop Aadhaar<br />
+                            or Click to Browse
+                        </span>
+
+                        <input type="file"
+                               name="AadhaarFile"
+                               accept=".pdf"
+                               class="drop-zone__input" />
+                    </div>
+                </div>
+
+                <div class="document-box">
+                    <div class="document-icon">💳</div>
+                    <div class="document-title">PAN Card</div>
+                    <div style="
+                        color:#6b7280;
+                        font-size:13px;
+                        margin-bottom:10px;">
+                        PDF only • Max 2 MB
+                    </div>
+
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">
+                            Drag & Drop PAN<br />
+                            or Click to Browse
+                        </span>
+
+                        <input type="file"
+                               name="PanFile"
+                               accept=".pdf"
+                               class="drop-zone__input" />
+
+                    </div>
+                </div>
+
+                <div class="document-box">
+                    <div class="document-icon">📄</div>
+                    <div class="document-title">Other Document</div>
+                    <div style="
+                        color:#6b7280;
+                        font-size:13px;
+                        margin-bottom:10px;">
+                        PDF only • Max 2 MB
+                    </div>
+
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">
+                            Drag & Drop Document<br />
+                            or Click to Browse
+                        </span>
+
+                        <input type="file"
+                               name="OtherFile"
+                               accept=".pdf"
+                               class="drop-zone__input" />
+                    </div>
+                </div>
+
+                <div id="addDocumentBtn"
+                     class="document-box add-document-card">
+
+                    <div class="add-document-icon">➕</div>
+
+                    <div class="add-document-text">
+                        Add Document
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    id="uploadBtn"
+                    class="submit-btn">
+                Upload Documents
+            </button>
+
+        </form>
+        @if (ViewBag.Progress != null)
+        {
+            <div class="upload-container mb-4">
+
+                <div style="
+                    background:white;
+                    border-radius:24px;
+                    padding:10px;
+                    box-shadow:0 10px 30px rgba(108,99,255,.08);">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <h4 style="
+                            font-weight:800;
+                            margin:0;
+                            color:#1a1a2e;
+                            font-size:24px;">
+                            Verification Progress
+                        </h4>
+
+                            <span style="
+                                background:linear-gradient(135deg,#6C63FF,#8B5CF6);
+                                color:white;
+                                padding:8px 18px;
+                                border-radius:50px;
+                                font-weight:700;">
+                                @ViewBag.Progress%
+                            </span>
+
+                    </div>
+
+                        <div style="
+                            height:8px;
+                            background:#edf2ff;
+                            border-radius:50px;
+                            overflow:hidden;">
+
+                            <div style="
+                                height:100%;
+                                width:@ViewBag.Progress%;
+                                background:linear-gradient(
+                                135deg,
+                                #6C63FF,
+                                #8B5CF6);">
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-4">
+
+                            <div class="col-md-4 mb-3">
+
+                                <div style="
+                                    background:#fafbff;
+
+                                    border-radius:18px;
+                                    padding:12px;
+                                    text-align:center;">
+
+                                    <div style="font-size:28px;">
+                                        @(string.IsNullOrEmpty(ViewBag.MainDocument?.AadhaarPath)
+                                            ? "❌"
+                                            : "✅")
+                                    </div>
+
+                                    <h5>Aadhaar Card</h5>
+
+                                    <div style="color:#6b7280;">
+                                        @(string.IsNullOrEmpty(ViewBag.MainDocument?.AadhaarPath)
+                                            ? "Not Uploaded"
+                                            : "Uploaded")
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <div style="
+                                    background:#fafbff;
+                                    border-radius:18px;
+                                    padding:12px;
+                                    text-align:center;">
+
+                                    <div style="font-size:28px;">
+                                        @(string.IsNullOrEmpty(ViewBag.MainDocument?.PanPath)
+                                            ? "❌"
+                                            : "✅")
+                                    </div>
+
+                                    <h5>PAN Card</h5>
+
+                                    <div style="color:#6b7280;">
+                                        @(string.IsNullOrEmpty(ViewBag.MainDocument?.PanPath)
+                                            ? "Not Uploaded"
+                                            : "Uploaded")
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <div style="
+                                    background:#fafbff;
+                                    border-radius:18px;
+                                    padding:12px;
+                                    text-align:center;">
+
+                                    <div style="font-size:28px;">
+
+                                        @(ViewBag.DocumentStatus == "Approved"
+                                            ? "🟢"
+                                            : ViewBag.DocumentStatus == "Rejected"
+                                            ? "🔴"
+                                            : "🟡")
+
+                                    </div>
+
+                                    <h5>Status</h5>
+
+                                    <div style="
+                                        font-weight:700;
+                                        color:#6C63FF;">
+
+                                        @ViewBag.DocumentStatus
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+        }
+
+        @if (ViewBag.MainDocument != null)
+        {
+            <div class="mt-5">
+
+                    <h5 style="font-weight:700;">
+                        Uploaded Documents
+                    </h5>
+
+                <div class="card p-3 mt-3">
+
+                    @if (!string.IsNullOrEmpty(ViewBag.MainDocument.AadhaarPath))
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <span>
+                                📄 Aadhaar Card
+                            </span>
+
+                            <a href="@ViewBag.MainDocument.AadhaarPath"
+                               target="_blank"
+                               class="btn btn-sm btn-primary">
+                                View
+                            </a>
+
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(ViewBag.MainDocument.PanPath))
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <span>
+                                📄 PAN Card
+                            </span>
+
+                            <a href="@ViewBag.MainDocument.PanPath"
+                               target="_blank"
+                               class="btn btn-sm btn-primary">
+                                View
+                            </a>
+
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(ViewBag.MainDocument.OtherDocumentPath))
+                    {
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+                                📄 Other Document
+                            </span>
+
+                            <a href="@ViewBag.MainDocument.OtherDocumentPath"
+                               target="_blank"
+                               class="btn btn-sm btn-primary">
+                                View
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+        @if (ViewBag.UserDocuments != null)
+        {
+            <div class="mt-4">
+
+                <h5 style="font-weight:700;">
+                    Additional Documents
+                </h5>
+
+                <div class="card p-3 mt-3">
+
+                    @foreach (var doc in ViewBag.UserDocuments)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <span>
+                                📄 @doc.DocumentName
+                            </span>
+
+                            <a href="@doc.FilePath"
+                               target="_blank"
+                               class="btn btn-sm btn-success">
+
+                                View
+
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+    
+
+</div>
+
+<script>
+
+    let documentCounter = 0;
+
+    initializeDropZones();
+
+    document
+    .getElementById("addDocumentBtn")
+    .addEventListener("click", function () {
+
+        documentCounter++;
+
+        const html = `
+        <div class="document-box">
+
+            <div class="document-icon">📎</div>
+
+            <div class="document-title">
+                <div style="
+                        color:#6b7280;
+                        font-size:13px;
+                        margin-bottom:10px;">
+                        PDF only • Max 2 MB
+                </div>
+                Additional Document ${documentCounter}
+            </div>
+
+            <input type="text"
+                   name="ExtraDocumentNames"
+                   class="document-name"
+                   placeholder="Enter Document Name" />
+
+            <div class="drop-zone">
+
+                <span class="drop-zone__prompt">
+                    Drag & Drop File<br>
+                    or Click to Browse
+                </span>
+
+                <input type="file"
+                   name="ExtraFiles"
+                   accept=".pdf"
+                   class="drop-zone__input" />
+
+            </div>
+
+        </div>
+        `;
+
+        document
+        .getElementById("addDocumentBtn")
+        .insertAdjacentHTML("beforebegin", html);
+
+        initializeDropZones();
+    });
+
+    function initializeDropZones() {
+
+        document.querySelectorAll(".drop-zone__input")
+        .forEach(input => {
+
+            const dropZone =
+                input.closest(".drop-zone");
+
+            if (dropZone.dataset.ready)
+                return;
+
+            dropZone.dataset.ready = "1";
+
+               input.addEventListener("change", () => {
+
+        if (input.files.length) {
+
+            const file = input.files[0];
+
+            // Only PDF
+            if (file.type !== "application/pdf") {
+
+                alert("Only PDF files are allowed.");
+
+                input.value = "";
+
+                return;
+            }
+
+            // Max 2 MB
+            if (file.size > 2 * 1024 * 1024) {
+
+                alert("File size must be less than 2 MB.");
+
+                input.value = "";
+
+                return;
+            }
+
+            updateThumbnail(
+                dropZone,
+                file);
+        }
+    });
+
+            dropZone.addEventListener("dragover", e => {
+
+                e.preventDefault();
+
+                dropZone.classList.add(
+                    "drop-zone--over");
+            });
+
+            dropZone.addEventListener("dragleave", () => {
+
+                dropZone.classList.remove(
+                    "drop-zone--over");
+            });
+
+            dropZone.addEventListener("drop", e => {
+
+                e.preventDefault();
+
+                if (e.dataTransfer.files.length) {
+
+                    input.files =
+                        e.dataTransfer.files;
+
+                    updateThumbnail(
+                        dropZone,
+                        e.dataTransfer.files[0]);
+                }
+
+                dropZone.classList.remove(
+                    "drop-zone--over");
+            });
+
+        });
+    }
+
+            function updateThumbnail(dropZone, file) 
+            {
+
+            let thumb =
+                dropZone.querySelector(".drop-zone__thumb");
+
+            if (!thumb) {
+
+                thumb =
+                    document.createElement("div");
+
+                thumb.classList.add(
+                    "drop-zone__thumb");
+
+                dropZone.appendChild(thumb);
+            }
+
+            const sizeMB =
+                (file.size / 1024 / 1024).toFixed(2);
+
+            thumb.innerHTML =
+                `
+                ✅ Selected File
+                <br><br>
+                <strong>${file.name}</strong>
+                <br>
+                <small>${sizeMB} MB</small>
+                `;
+            }
+    
+
+        document.querySelector("form")
+    .addEventListener("submit", function () {
+
+        const btn =
+            document.getElementById("uploadBtn");
+
+        btn.disabled = true;
+
+        btn.innerHTML =
+            "Uploading Documents...";
+    });
+
+</script>

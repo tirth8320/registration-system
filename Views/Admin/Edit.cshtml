@@ -1,0 +1,665 @@
+﻿@model registration.Models.UserMaster
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+@* 
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <!-- HEADER -->
+
+                <div class="card-header bg-dark text-white p-4">
+
+                    <h2 class="mb-0">
+                        Edit User
+                    </h2>
+
+                </div>
+
+                <!-- BODY -->
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Edit" method="post">
+
+                        <!-- HIDDEN FIELDS -->
+
+                        <input type="hidden" asp-for="UserId" />
+
+                        <input type="hidden" asp-for="Password" />
+
+                        <input type="hidden" asp-for="ConfirmPassword" />
+
+                        <input type="hidden" asp-for="CreatedDate" />
+
+                        <!-- ROW -->
+
+                        <div class="row">
+
+                            <!-- FULL NAME -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    Full Name
+                                </label>
+
+                                <input asp-for="FullName"
+                                       class="form-control" />
+
+                            </div>
+
+                            <!-- USERNAME -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    User Name
+                                </label>
+
+                                <input asp-for="UserName"
+                                       class="form-control" />
+
+                            </div>
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    Email
+                                </label>
+
+                                <input asp-for="EmailID"
+                                       class="form-control" />
+
+                            </div>
+
+                            <!-- MOBILE -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    Mobile Number
+                                </label>
+
+                                <input asp-for="MobileNo"
+                                       class="form-control" />
+
+                            </div>
+
+                            <!-- DOB -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    DOB
+                                </label>
+
+                                <input type="date"
+                                       asp-for="DOB"
+                                       class="form-control" />
+
+                            </div>
+
+                            <!-- ROLE -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    Role
+                                </label>
+
+                                <select asp-for="RoleId"
+                                        class="form-select">
+
+                                    <option value="1">
+                                        Admin
+                                    </option>
+
+                                    <option value="2">
+                                        User
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- GENDER -->
+
+                            <div class="col-12 mb-4">
+
+                                <label class="form-label fw-semibold d-block">
+
+                                    Gender
+
+                                </label>
+
+                                <div class="form-check form-check-inline">
+
+                                    <input type="radio"
+                                           asp-for="Gender"
+                                           value="Male"
+                                           class="form-check-input" />
+
+                                    <label class="form-check-label">
+
+                                        Male
+
+                                    </label>
+
+                                </div>
+
+                                <div class="form-check form-check-inline">
+
+                                    <input type="radio"
+                                           asp-for="Gender"
+                                           value="Female"
+                                           class="form-check-input" />
+
+                                    <label class="form-check-label">
+
+                                        Female
+
+                                    </label>
+
+                                </div>
+
+                                <div class="form-check form-check-inline">
+
+                                    <input type="radio"
+                                           asp-for="Gender"
+                                           value="Other"
+                                           class="form-check-input" />
+
+                                    <label class="form-check-label">
+
+                                        Other
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a asp-action="UserList"
+                               class="btn btn-secondary px-4">
+
+                                Back
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+
+                                Update User
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div> *@
+@* 
+@model registration.Models.UserMaster
+
+@{
+    ViewData["Title"] = "Edit";
+} *@
+
+<style>
+    .edit-wrapper {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 1rem 0 2.5rem;
+    }
+
+    .edit-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.83rem;
+        color: #9898B5;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        animation: fadeIn 0.4s ease both;
+    }
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .edit-breadcrumb a {
+        color: #6C63FF;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .edit-breadcrumb i {
+        font-size: 0.7rem;
+    }
+
+    .edit-card {
+        background: white;
+        border: 1px solid rgba(108,99,255,0.12);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 15px 50px rgba(108,99,255,0.12);
+        animation: slideUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @@keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(28px) scale(0.97);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .edit-header {
+        background: linear-gradient(135deg,#6C63FF 0%,#8B5CF6 55%,#38BDF8 100%);
+        padding: 2rem 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .edit-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+    .edit-header-icon {
+        width: 54px;
+        height: 54px;
+        background: rgba(255,255,255,0.22);
+        border: 1.5px solid rgba(255,255,255,0.35);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        position: relative;
+        z-index: 1;
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+    @@keyframes iconFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    .edit-header-info {
+        position: relative;
+        z-index: 1;
+    }
+
+    .edit-header-title {
+        font-family: 'Syne',sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+        margin: 0;
+    }
+
+    .edit-header-sub {
+        color: rgba(255,255,255,0.75);
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .edit-body {
+        padding: 2.2rem 2.5rem;
+    }
+
+    .section-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6C63FF;
+        background: linear-gradient(90deg,rgba(108,99,255,0.08),transparent);
+        padding: 0.35rem 0.8rem;
+        border-left: 3px solid #6C63FF;
+        border-radius: 0 6px 6px 0;
+        margin: 0 0 1.2rem;
+        display: inline-block;
+    }
+
+    .field-box {
+        margin-bottom: 1.3rem;
+    }
+
+    .field-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #4A4A6A;
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+        .field-label i {
+            color: #6C63FF;
+            font-size: 0.82rem;
+        }
+
+    .field-input {
+        display: block;
+        width: 100%;
+        border: 1.5px solid rgba(108,99,255,0.15);
+        border-radius: 12px;
+        padding: 0.65rem 1rem;
+        font-family: 'Plus Jakarta Sans',sans-serif;
+        font-size: 0.9rem;
+        color: #1A1A2E;
+        background: #F6F7FB;
+        transition: all 0.25s ease;
+        outline: none;
+    }
+
+        .field-input:focus {
+            border-color: #6C63FF;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(108,99,255,0.1);
+        }
+
+    select.field-input {
+        cursor: pointer;
+    }
+
+    .gender-row {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .gender-pill {
+        position: relative;
+        flex: 1;
+        min-width: 90px;
+    }
+
+        .gender-pill input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .gender-pill-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.6rem;
+        border: 1.5px solid rgba(108,99,255,0.18);
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #4A4A6A;
+        background: #F6F7FB;
+        transition: all 0.2s ease;
+    }
+
+    .gender-pill input:checked + .gender-pill-label {
+        border-color: #6C63FF;
+        background: rgba(108,99,255,0.09);
+        color: #6C63FF;
+    }
+
+    .gender-pill-label:hover {
+        border-color: #6C63FF;
+        background: rgba(108,99,255,0.05);
+    }
+
+    .edit-footer {
+        padding: 1.5rem 2.5rem;
+        background: rgba(108,99,255,0.02);
+        border-top: 1px solid rgba(108,99,255,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1.4rem;
+        border: 1.5px solid rgba(108,99,255,0.2);
+        border-radius: 50px;
+        color: #4A4A6A;
+        font-weight: 600;
+        font-size: 0.88rem;
+        text-decoration: none;
+        background: white;
+        transition: all 0.2s ease;
+    }
+
+        .btn-back:hover {
+            border-color: #6C63FF;
+            color: #6C63FF;
+            background: rgba(108,99,255,0.05);
+        }
+
+    .btn-update {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1.8rem;
+        background: linear-gradient(135deg,#6C63FF,#8B5CF6);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 18px rgba(108,99,255,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-update::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108,99,255,0.4);
+        }
+
+            .btn-update:hover::before {
+                left: 100%;
+            }
+</style>
+
+<div class="edit-wrapper">
+    <!-- Breadcrumb -->
+    <nav class="edit-breadcrumb">
+        <a asp-controller="Admin" asp-action="UserList"><i class="bi bi-people"></i> Users</a>
+        <i class="bi bi-chevron-right"></i>
+        <span>Edit User #@Model.UserId</span>
+    </nav>
+
+    <div class="edit-card">
+        <!-- HEADER -->
+        <div class="edit-header">
+            <div class="edit-header-icon">
+                <i class="bi bi-person-gear"></i>
+            </div>
+            <div class="edit-header-info">
+                <h2 class="edit-header-title">Edit User</h2>
+                <p class="edit-header-sub">Update the information for <strong>@Model.FullName</strong></p>
+            </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="edit-body">
+            <form asp-action="Edit" method="post">
+                <!-- Hidden fields -->
+                <input type="hidden" asp-for="UserId" />
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="ConfirmPassword" />
+                <input type="hidden" asp-for="CreatedDate" />
+
+                <!-- Personal Info -->
+                <div class="section-tag"><i class="bi bi-person me-1"></i>Personal Information</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-person"></i> Full Name</label>
+                            <input asp-for="FullName" class="field-input" placeholder="Full name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-at"></i> User Name</label>
+                            <input asp-for="UserName" class="field-input" placeholder="Username" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-envelope"></i> Email</label>
+                            <input asp-for="EmailID" class="field-input" placeholder="email@example.com" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-phone"></i> Mobile Number</label>
+                            <input asp-for="MobileNo" class="field-input" placeholder="Mobile number" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-calendar3"></i> Date of Birth</label>
+                            <input type="date" asp-for="DOB" class="field-input" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-shield-check"></i> Role</label>
+                            <select asp-for="RoleId" class="form-select">
+
+                                <option value="">Select Role</option>
+
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    <option value="@role.RoleID">
+                                        @role.RoleName
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="field-box">
+                            <label class="field-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                            <div class="gender-row">
+                                <div class="gender-pill">
+                                    <input type="radio" asp-for="Gender" value="Male" id="eMale" />
+                                    <label class="gender-pill-label" for="eMale">
+                                        <i class="bi bi-gender-male"></i> Male
+                                    </label>
+                                </div>
+                                <div class="gender-pill">
+                                    <input type="radio" asp-for="Gender" value="Female" id="eFemale" />
+                                    <label class="gender-pill-label" for="eFemale">
+                                        <i class="bi bi-gender-female"></i> Female
+                                    </label>
+                                </div>
+                                <div class="gender-pill">
+                                    <input type="radio" asp-for="Gender" value="Other" id="eOther" />
+                                    <label class="gender-pill-label" for="eOther">
+                                        <i class="bi bi-person"></i> Other
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- FOOTER BUTTONS -->
+        <div class="edit-footer">
+            <a asp-action="UserList" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Back to Users
+            </a>
+            <button type="submit" form="editForm" class="btn-update"
+                    onclick="this.closest('.edit-card').querySelector('form').submit();">
+                <i class="bi bi-check2-circle"></i> Update User
+            </button>
+        </div>
+    </div>
+</div>
+
+@* Move form submit button to work correctly *@
+<script>
+    // Wire the Update button to submit the form
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.edit-body form');
+        const btn  = document.querySelector('.btn-update');
+        if (btn && form) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                form.submit();
+            });
+        }
+    });
+</script>

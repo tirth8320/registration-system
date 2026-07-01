@@ -1,0 +1,563 @@
+﻿@* @{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Http
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @Context.Session.GetString("UserName")</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Http
+
+<style>
+    .home-wrapper {
+        padding: 0.5rem 0 2rem;
+    }
+
+    /* HERO BANNER */
+    .welcome-hero {
+        background: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 50%, #38BDF8 100%);
+        border-radius: 24px;
+        padding: 2.8rem 3rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        animation: slideDown 0.6s ease both;
+        box-shadow: 0 15px 50px rgba(108,99,255,0.3);
+    }
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .welcome-hero::before {
+        content: '';
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .welcome-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -100px;
+        left: 20%;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.07);
+    }
+
+    .hero-inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-greeting {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.7);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+    }
+
+    .hero-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 0.8rem;
+        letter-spacing: -0.5px;
+    }
+
+        .hero-title span {
+            background: rgba(255,255,255,0.25);
+            padding: 0.05em 0.3em;
+            border-radius: 8px;
+        }
+
+    .hero-desc {
+        color: rgba(255,255,255,0.8);
+        font-size: 0.95rem;
+        max-width: 480px;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-btn-primary {
+        background: white;
+        color: #6C63FF;
+        border: none;
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            color: #6C63FF;
+        }
+
+    .hero-btn-ghost {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.35);
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.2s ease;
+    }
+
+        .hero-btn-ghost:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    /* 3D FLOATING BADGE */
+    .hero-badge {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: badge3d 4s ease-in-out infinite;
+        z-index: 2;
+    }
+    @@keyframes badge3d {
+        0%, 100% {
+            transform: translateY(-50%) rotate(-4deg) scale(1);
+        }
+
+        50% {
+            transform: translateY(calc(-50% - 12px)) rotate(4deg) scale(1.04);
+        }
+    }
+
+    .hero-badge-inner {
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255,255,255,0.35);
+        border-radius: 20px;
+        padding: 1.2rem 1.5rem;
+        text-align: center;
+        color: white;
+        min-width: 130px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .badge-number {
+        font-family: 'Syne', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 0.2rem;
+    }
+
+    .badge-label {
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.8);
+        font-weight: 600;
+    }
+
+    /* STAT CARDS */
+    .stat-card {
+        background: white;
+        border: 1px solid rgba(108,99,255,0.1);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        box-shadow: 0 4px 20px rgba(108,99,255,0.08);
+        transition: all 0.3s ease;
+        animation: fadeCard 0.6s ease both;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.violet::after {
+            background: linear-gradient(90deg,#6C63FF,#8B5CF6);
+        }
+
+        .stat-card.sky::after {
+            background: linear-gradient(90deg,#38BDF8,#6C63FF);
+        }
+
+        .stat-card.coral::after {
+            background: linear-gradient(90deg,#FF6B6B,#FF8E53);
+        }
+
+        .stat-card.mint::after {
+            background: linear-gradient(90deg,#34D399,#38BDF8);
+        }
+
+    @@keyframes fadeCard {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .stat-card:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .stat-card:nth-child(4) {
+        animation-delay: 0.3s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(108,99,255,0.15);
+    }
+
+    .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+    }
+
+        .stat-icon.violet {
+            background: rgba(108,99,255,0.12);
+            color: #6C63FF;
+        }
+
+        .stat-icon.sky {
+            background: rgba(56,189,248,0.12);
+            color: #38BDF8;
+        }
+
+        .stat-icon.coral {
+            background: rgba(255,107,107,0.12);
+            color: #FF6B6B;
+        }
+
+        .stat-icon.mint {
+            background: rgba(52,211,153,0.12);
+            color: #34D399;
+        }
+
+    .stat-value {
+        font-family: 'Syne',sans-serif;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #1A1A2E;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.82rem;
+        color: #9898B5;
+        font-weight: 600;
+        margin-top: 0.2rem;
+    }
+
+    /* QUICK ACTIONS */
+    .section-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1A1A2E;
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg,rgba(108,99,255,0.2),transparent);
+            margin-left: 0.5rem;
+        }
+
+    .action-card {
+        background: white;
+        border: 1px solid rgba(108,99,255,0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        animation: fadeCard 0.6s ease both;
+        box-shadow: 0 2px 12px rgba(108,99,255,0.06);
+    }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(108,99,255,0.14);
+            border-color: rgba(108,99,255,0.25);
+        }
+
+    .action-card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .action-card-title {
+        font-weight: 700;
+        color: #1A1A2E;
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .action-card-desc {
+        font-size: 0.8rem;
+        color: #9898B5;
+        font-weight: 500;
+    }
+
+    .action-arrow {
+        float: right;
+        margin-top: -1.8rem;
+        color: #9898B5;
+        font-size: 1rem;
+        transition: transform 0.2s;
+    }
+
+    .action-card:hover .action-arrow {
+        transform: translate(3px,-3px);
+        color: #6C63FF;
+    }
+
+    /* INFO BANNER */
+    .info-banner {
+        background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(108,99,255,0.08));
+        border: 1px solid rgba(108,99,255,0.15);
+        border-radius: 16px;
+        padding: 1.3rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+        .info-banner i {
+            font-size: 1.5rem;
+            color: #6C63FF;
+        }
+
+    .info-banner-text {
+        font-size: 0.88rem;
+        color: #4A4A6A;
+        font-weight: 500;
+    }
+
+        .info-banner-text a {
+            color: #6C63FF;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+    @@media(max - width:768px) {
+        .hero-badge {
+            display: none;
+        }
+
+        .hero-title {
+            font-size: 1.7rem;
+        }
+
+        .welcome-hero {
+            padding: 2rem 1.5rem;
+        }
+    }
+</style>
+
+<div class="home-wrapper">
+    <!-- WELCOME HERO -->
+    <div class="welcome-hero">
+        <div class="hero-inner">
+            <p class="hero-greeting"><i class="bi bi-stars me-1"></i> Welcome back</p>
+            <h1 class="hero-title">
+                Hello, <span>@Context.Session.GetString("UserName")</span>!
+            </h1>
+            <p class="hero-desc">
+                You're logged in to the Registration System. Manage users, roles, and accounts all from this dashboard.
+            </p>
+            <div class="hero-actions">
+                <a asp-controller="Home" asp-action="Index" class="hero-btn-primary">
+                    <i class="bi bi-house"></i> Dashboard
+                </a>
+                @if (Context.Session.GetInt32("RoleId") == 1)
+                {
+                    <a asp-controller="Admin" asp-action="UserList" class="hero-btn-ghost">
+                        <i class="bi bi-people"></i> Manage Users
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="hero-badge d-none d-lg-block">
+            <div class="hero-badge-inner">
+                <div class="badge-number">✓</div>
+                <div class="badge-label">Active Session</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="stat-card violet">
+                <div class="stat-icon violet"><i class="bi bi-people-fill"></i></div>
+                <div>
+                    <div class="stat-value">
+                        @ViewBag.TotalUsers
+                    </div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card sky">
+                <div class="stat-icon sky"><i class="bi bi-shield-check"></i></div>
+                <div>
+                    <div class="stat-value">
+                        @ViewBag.TotalRoles
+                    </div>
+                    <div class="stat-label">Active Roles</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card coral">
+                <div class="stat-icon coral"><i class="bi bi-clock-history"></i></div>
+                <div>
+                    <div class="stat-value">
+                        @ViewBag.PendingDocuments
+                    </div>
+                    <div class="stat-label">New Today</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card mint">
+                <div class="stat-icon mint"><i class="bi bi-check-circle"></i></div>
+                <div>
+                    <div class="stat-value">@ViewBag.ApprovedDocuments</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <h2 class="section-title"><i class="bi bi-lightning-charge" style="color:#6C63FF;"></i> Quick Actions</h2>
+    <div class="row g-3 mb-4">
+        @if (Context.Session.GetInt32("RoleId") == 1)
+        {
+            <div class="col-md-4">
+                <a asp-controller="Admin" asp-action="UserList" class="action-card">
+                    <div class="action-card-icon" style="background:rgba(108,99,255,0.12);color:#6C63FF;">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="action-card-title">User Management</div>
+                    <div class="action-card-desc">View, edit and manage all registered users</div>
+                    <i class="bi bi-arrow-up-right action-arrow"></i>
+                </a>
+            </div>
+        }
+        <div class="col-md-4">
+            <a asp-controller="Register" asp-action="Index" class="action-card">
+                <div class="action-card-icon" style="background:rgba(56,189,248,0.12);color:#38BDF8;">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <div class="action-card-title">Register New User</div>
+                <div class="action-card-desc">Create a new account in the system</div>
+                <i class="bi bi-arrow-up-right action-arrow"></i>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="https://learn.microsoft.com/aspnet/core" target="_blank" class="action-card">
+                <div class="action-card-icon" style="background:rgba(52,211,153,0.12);color:#34D399;">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="action-card-title">Documentation</div>
+                <div class="action-card-desc">Learn how to build Web apps with ASP.NET Core</div>
+                <i class="bi bi-arrow-up-right action-arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- INFO BANNER -->
+    <div class="info-banner">
+        <i class="bi bi-info-circle-fill"></i>
+        <div class="info-banner-text">
+            You're using the <strong>Registration System v1.0</strong>. Learn more about
+            <a href="https://learn.microsoft.com/aspnet/core" target="_blank">building with ASP.NET Core</a>
+            or check <a href="#">Privacy Policy</a>.
+        </div>
+    </div>
+</div>

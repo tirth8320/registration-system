@@ -1,0 +1,1086 @@
+﻿@model IEnumerable<registration.Models.ErrorLog>
+
+@{
+    ViewData["Title"] = "Error Log Management";
+}
+@if (TempData["Success"] != null)
+{
+    <script>
+
+        Swal.fire({
+
+            icon:'success',
+
+            title:'Success',
+
+            text:'@TempData["Success"]',
+
+            timer:1800,
+
+            showConfirmButton:false
+
+        });
+
+    </script>
+}
+
+<style>
+
+    /* ===========================
+       PAGE
+    =========================== */
+
+    body {
+        font-family: 'Plus Jakarta Sans',sans-serif;
+        background: #F6F8FB;
+    }
+
+    /* ===========================
+       HEADER
+    =========================== */
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom:15px;
+    }
+
+    .title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .title-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 21px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg,#6C63FF,#8B5CF6);
+        color: white;
+        font-size: 26px;
+        box-shadow: 0 12px 30px rgba(124,58,237,.25);
+    }
+
+    .page-title {
+        font-family: 'Syne',sans-serif;
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1A1A2E;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+    }
+
+    .page-subtitle {
+        color: #8A8FA3;
+        margin-top: 6px;
+    }
+
+    .page-pill {
+        background: #EEF2FF;
+        color: #6D28D9;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    /* ===========================
+       SEARCH
+    =========================== */
+
+    .search-card {
+        background: white;
+        border: none;
+        border-radius: 22px;
+        box-shadow: 0 8px 25px rgba(0,0,0,.06);
+        padding: 7px;
+        margin-bottom: 18px;
+    }
+
+        .search-card .form-control,
+        .search-card .form-select {
+            height: 34px;
+            border-radius: 28px;
+        }
+
+        .search-card .btn {
+            height: 34px;
+            border-radius: 28px;
+        }
+
+    /* ===========================
+       SMALL CARDS
+    =========================== */
+
+    .stats-card {
+        background: white;
+        border: none;
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: 0 8px 22px rgba(0,0,0,.06);
+        transition: .3s;
+    }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .stats-title {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .stats-number {
+        font-size: 32px;
+        font-weight: 800;
+        margin-top: 8px;
+    }
+
+    .stats-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+    }
+
+    .primary-bg {
+        background: #EEF2FF;
+        color: #4F46E5;
+    }
+
+    .success-bg {
+        background: #E9FFF3;
+        color: #16A34A;
+    }
+
+    .danger-bg {
+        background: #FFECEC;
+        color: #DC2626;
+    }
+
+    .warning-bg {
+        background: #FFF6DF;
+        color: #D97706;
+    }
+
+    /* ===========================================
+            ANALYTICS CARDS
+    =========================================== */
+
+    .analytics-card {
+        border: none;
+        border-radius: 22px;
+        box-shadow: 0 8px 22px rgba(0,0,0,.06);
+    }
+
+        .analytics-card .card-header {
+            background: white;
+            border: none;
+            padding: 20px;
+        }
+
+        .analytics-card .card-body {
+            padding: 20px;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            transition: .3s;
+        }
+
+    /* ==========================================
+       ANALYTICS CARDS
+    ========================================== */
+
+    .analytics-card {
+        height: 320px;
+        overflow: hidden;
+        transition: .3s;
+    }
+
+        .analytics-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .analytics-card .card-header {
+            padding: 18px 22px;
+        }
+
+        .analytics-card .card-body {
+            padding: 15px 22px;
+            overflow-y: auto;
+        }
+
+            /* Scrollbar */
+
+            .analytics-card .card-body::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .analytics-card .card-body::-webkit-scrollbar-thumb {
+                background: #D1D5DB;
+                border-radius: 20px;
+            }
+
+    /* ==========================================
+            ERROR HISTORY CARD
+    ========================================== */
+
+    .error-history-card {
+        border-radius: 24px;
+        overflow: hidden;
+    }
+
+    /* Scrollable Table */
+
+    .table-scroll {
+        max-height: 420px;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+        /* Sticky Header */
+
+        .table-scroll thead th {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            z-index: 10;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+    /* Better Table */
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        /* Table Row */
+
+        .table tbody tr {
+            transition: .25s;
+        }
+
+            .table tbody tr:hover {
+                background: #F8FAFF;
+            }
+
+    /* Rounded Header */
+
+    .card-header {
+        border-bottom: 1px solid #F1F1F1;
+    }
+
+    /* Better Padding */
+
+    .table th {
+        padding: 16px 18px;
+        font-weight: 700;
+        color: #6B7280;
+    }
+
+    .table td {
+        padding: 18px;
+        vertical-align: middle;
+    }
+
+    /* Custom Scroll */
+
+    .table-scroll::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb {
+        background: #D6D6D6;
+        border-radius: 50px;
+    }
+
+    .table-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+</style>
+
+<div class="container-fluid">
+
+    <div class="page-header">
+
+        <div class="title-wrapper">
+
+            <div class="title-icon">
+
+                <i class="bi bi-bug-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2 class="page-title">
+
+                    Error Log Management
+
+                </h2>
+
+                <div class="page-subtitle">
+
+                    Monitor application errors and investigate system issues.
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <span class="page-pill">
+
+                <i class="bi bi-bug me-2"></i>
+
+                @Model.Count() Logs
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="search-card">
+
+        <form method="get">
+
+            <div class="row g-3">
+
+                <div class="col-lg-6">
+
+                    <input class="form-control"
+                           name="search"
+                           value="@ViewBag.Search"
+                           placeholder="Search user, controller or error..." />
+
+                </div>
+
+                <div class="col-lg-3">
+
+                    <select class="form-select"
+                            name="status">
+
+                        <option value="All">All Status</option>
+
+                        <option value="New">New</option>
+
+                        <option value="Reviewed">Reviewed</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-lg-3">
+
+                    <button class="btn btn-primary w-100">
+
+                        <i class="bi bi-search"></i>
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <div class="stats-title">
+
+                            Total Errors
+
+                        </div>
+
+                        <div class="stats-number">
+
+                            @ViewBag.TotalErrors
+
+                        </div>
+
+                    </div>
+
+                    <div class="stats-icon primary-bg">
+
+                        <i class="bi bi-bug-fill"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <div class="stats-title">
+
+                            New Errors
+
+                        </div>
+
+                        <div class="stats-number text-primary">
+
+                            @ViewBag.NewErrors
+
+                        </div>
+
+                    </div>
+
+                    <div class="stats-icon warning-bg">
+
+                        <i class="bi bi-exclamation-circle-fill"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <div class="stats-title">
+
+                            Critical
+
+                        </div>
+
+                        <div class="stats-number text-danger">
+
+                            @ViewBag.CriticalErrors
+
+                        </div>
+
+                    </div>
+
+                    <div class="stats-icon danger-bg">
+
+                        <i class="bi bi-x-octagon-fill"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <div class="stats-title">
+
+                            Reviewed
+
+                        </div>
+
+                        <div class="stats-number text-success">
+
+                            @ViewBag.ReviewedErrors
+
+                        </div>
+
+                    </div>
+
+                    <div class="stats-icon success-bg">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================================
+                    ANALYTICS SECTION
+========================================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- ================= Top Controllers ================= -->
+
+        <div class="col-lg-4">
+
+            <div class="card analytics-card border-0 shadow-sm rounded-5">
+
+                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h5 class="fw-bold mb-0">
+
+                            <i class="bi bi-cpu-fill text-primary me-2"></i>
+
+                            Top Controllers
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Controllers with most errors
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+
+                    @foreach (var item in ViewBag.TopControllers)
+                    {
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+
+                            <div class="d-flex align-items-center">
+
+                                <div class="rounded-circle bg-primary-subtle me-3 d-flex align-items-center justify-content-center"
+                                     style="width:38px;height:38px;">
+
+                                    <i class="bi bi-code-slash text-primary"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="fw-semibold">
+
+                                        @item.Controller
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-primary rounded-pill px-2 py-1">
+
+                                @item.Count
+
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= Top Users ================= -->
+
+        <div class="col-lg-4">
+
+            <div class="card analytics-card border-0 shadow-sm rounded-5">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-people-fill text-success me-2"></i>
+
+                        Top Users
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        Users generating most errors
+
+                    </small>
+
+                </div>
+
+                <div class="card-body">
+
+                    @foreach (var item in ViewBag.TopUsers)
+                    {
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+
+                            <div class="d-flex align-items-center">
+
+                                <div class="rounded-circle bg-success-subtle me-3 d-flex justify-content-center align-items-center"
+                                     style="width:38px;height:38px;">
+
+                                    <i class="bi bi-person-fill text-success"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="fw-semibold">
+
+                                        @(item.User ?? "Guest")
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-success rounded-pill px-3">
+
+                                @item.Count
+
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= Common Errors ================= -->
+
+        <div class="col-lg-4">
+
+            <div class="card analytics-card border-0 shadow-sm rounded-5">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+
+                        Common Errors
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        Frequently occurring exceptions
+
+                    </small>
+
+                </div>
+
+                <div class="card-body">
+
+                    @foreach (var item in ViewBag.TopErrors)
+                    {
+                        <div class="py-3 border-bottom">
+
+                            <div class="fw-semibold">
+
+                                @item.Message
+
+                            </div>
+
+                            <span class="badge bg-danger mt-2">
+
+                                @item.Count Times
+
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<!-- ==========================================================
+                    ERROR HISTORY
+========================================================== -->
+
+<div class="card border-0 shadow-sm rounded-5 mt-4 error-history-card">
+
+    <div class="card-header bg-white border-0 py-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- Left -->
+                <div>
+
+                    <h4 class="fw-bold mb-1">
+
+                        <i class="bi bi-clock-history text-primary me-2"></i>
+
+                        Error History
+
+                    </h4>
+
+                    <small class="text-muted">
+
+                        Complete history of all application errors
+
+                    </small>
+
+                </div>
+
+                <!-- Right -->
+                <div class="d-flex align-items-center gap-2">
+
+                    <a asp-action="ExportExcel"
+                       class="btn btn-success btn-sm">
+
+                        <i class="bi bi-file-earmark-excel-fill me-1"></i>
+
+                        Excel
+
+                    </a>
+
+                    <a asp-action="ExportPdf"
+                       class="btn btn-danger btn-sm">
+
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i>
+
+                        PDF
+
+                    </a>
+
+                    <span class="badge bg-primary rounded-pill px-3 py-2">
+
+                        @Model.Count() Records
+
+                    </span>
+
+                </div>
+
+            </div>
+
+    </div>
+
+    <div class="table-scroll">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th style="width:70px;">#</th>
+
+                    <th>User</th>
+
+                    <th>Controller</th>
+
+                    <th>Action</th>
+
+                    <th>Severity</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                    <th class="text-center">
+
+                        Actions
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+@if (!Model.Any())
+{
+    <tr>
+
+        <td colspan="8">
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-check-circle-fill text-success"
+                    style="font-size:70px;"></i>
+
+                <h4 class="mt-3 fw-bold">
+
+                    No Error Logs Found
+
+                </h4>
+
+                <p class="text-muted">
+
+                    Your application is running without recorded exceptions.
+
+                </p>
+
+            </div>
+
+        </td>
+
+    </tr>
+}
+
+@foreach (var item in Model)
+{
+    <tr>
+
+        <td>
+
+            <span class="fw-bold text-primary">
+
+                #@item.ErrorId
+
+            </span>
+
+        </td>
+
+        <td>
+
+            <div class="d-flex align-items-center">
+
+                <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
+                     style="width:45px;height:45px;font-weight:700;">
+
+                    @((item.UserName ?? "G")[0].ToString().ToUpper())
+
+                </div>
+
+                <div>
+
+                    <div class="fw-semibold">
+
+                        @(item.UserName ?? "Guest")
+
+                    </div>
+
+                    <small class="text-muted">
+
+                        @item.UserRole
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <span class="badge bg-primary-subtle text-primary px-3 py-2">
+
+                @item.ControllerName
+
+            </span>
+
+        </td>
+
+        <td>
+
+            <span class="badge bg-secondary px-3 py-2">
+
+                @item.ActionName
+
+            </span>
+
+        </td>
+
+        <td>
+
+            @if (item.Severity == "Critical")
+            {
+                <span class="badge bg-danger">
+
+                    @item.Severity
+
+                </span>
+            }
+            else if (item.Severity == "Medium")
+            {
+                <span class="badge bg-warning text-dark">
+
+                    @item.Severity
+
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-success">
+
+                    @item.Severity
+
+                </span>
+            }
+
+        </td>
+
+        <td>
+
+            @if (item.Status == "Reviewed")
+            {
+                <span class="badge bg-success">
+
+                    Reviewed
+
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark">
+
+                    New
+
+                </span>
+            }
+
+        </td>
+
+        <td>
+
+            <div>
+
+                @item.CreatedDate.ToString("dd MMM yyyy")
+
+            </div>
+
+            <small class="text-muted">
+
+                @item.CreatedDate.ToString("hh:mm tt")
+
+            </small>
+                            </td>
+
+                            <td class="text-center">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.ErrorId"
+                                   class="btn btn-primary btn-sm me-1">
+
+                                    <i class="bi bi-eye-fill"></i>
+
+                                </a>
+
+                                @if (item.Status != "Reviewed")
+                                {
+                                    <a asp-action="MarkReviewed"
+                                       asp-route-id="@item.ErrorId"
+                                       class="btn btn-success btn-sm me-1">
+
+                                        <i class="bi bi-check-lg"></i>
+
+                                    </a>
+                                }
+
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="confirmDelete(@item.ErrorId)">
+
+                                    <i class="bi bi-trash-fill"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </td>
+
+
+<script>
+
+    function confirmDelete(id)
+    {
+
+        Swal.fire({
+
+            title: 'Delete Error Log?',
+
+            text: "This record will be permanently deleted.",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonColor: '#dc3545',
+
+            cancelButtonColor: '#6c757d',
+
+            confirmButtonText: 'Yes, Delete',
+
+            cancelButtonText:'Cancel',
+
+            reverseButtons:true
+
+        }).then((result)=>{
+
+            if(result.isConfirmed){
+
+                window.location.href="/ErrorLog/Delete/"+id;
+
+            }
+
+        });
+
+    }
+
+</script>

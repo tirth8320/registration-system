@@ -1,0 +1,274 @@
+﻿@model registration.Models.ErrorLog
+
+@{
+    ViewData["Title"] = "Error Details";
+}
+
+<div class="container-fluid">
+
+    <div class="hero-card mb-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h2 class="fw-bold mb-2">
+                    🐞 Error Details
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Complete information about the selected application error.
+                </p>
+
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-primary rounded-pill">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 mb-4">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="fw-bold mb-0">
+
+                        User Information
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-borderless">
+
+                        <tr>
+
+                            <th>User</th>
+
+                            <td>@Model.UserName</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Role</th>
+
+                            <td>@Model.UserRole</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Controller</th>
+
+                            <td>@Model.ControllerName</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Action</th>
+
+                            <td>@Model.ActionName</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Method</th>
+
+                            <td>@Model.RequestMethod</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <td>
+
+                                @Model.CreatedDate.ToString("dd MMM yyyy")
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 mb-4">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="fw-bold mb-0">
+
+                        Request Information
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-borderless">
+
+                        <tr>
+
+                            <th>URL</th>
+
+                            <td>@Model.Url</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Browser</th>
+
+                            <td>@Model.Browser</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>IP Address</th>
+
+                            <td>@Model.IPAddress</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Status</th>
+
+                            <td>
+
+                                <span class="badge bg-primary">
+
+                                    @Model.Status
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Severity</th>
+
+                            <td>
+
+                                <span class="badge bg-danger">
+
+                                    @Model.Severity
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="fw-bold mb-0">
+
+                Error Message
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-danger">
+
+                @Model.ErrorMessage
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="fw-bold mb-0">
+
+                Stack Trace
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <pre class="bg-dark text-white p-3 rounded">
+
+@Model.StackTrace
+
+            </pre>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a asp-action="MarkReviewed"
+           asp-route-id="@Model.ErrorId"
+           class="btn btn-success">
+
+            <i class="bi bi-check-circle"></i>
+
+            Mark Reviewed
+
+        </a>
+
+        <a asp-action="Delete"
+           asp-route-id="@Model.ErrorId"
+           class="btn btn-danger">
+
+            <i class="bi bi-trash"></i>
+
+            Delete
+
+        </a>
+
+    </div>
+
+</div>

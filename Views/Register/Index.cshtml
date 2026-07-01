@@ -1,0 +1,695 @@
+﻿@* @model registration.Models.UserMaster
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+    <div class="card shadow-lg p-5 w-100">
+
+        <h2 class="text-center mb-4">Registration Form</h2>
+
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Full Name</label>
+
+                    <input asp-for="FullName" class="form-control" />
+
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">User Name</label>
+
+                    <input asp-for="UserName" class="form-control" />
+
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Password</label>
+
+                    <input type="password" asp-for="Password" class="form-control" />
+
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Confirm Password</label>
+
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
+
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+
+                    <input asp-for="EmailID" class="form-control" />
+
+                    <span asp-validation-for="EmailID" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Mobile Number</label>
+
+                    <input asp-for="MobileNo" class="form-control" />
+
+                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">DOB</label>
+
+                    <input type="date" asp-for="DOB" class="form-control" />
+
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Role</label>
+
+                    <select asp-for="RoleId" class="form-select">
+                        <option value="">Select Role</option>
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                    </select>
+
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Gender</label>
+
+                    <div class="form-check">
+                        <input type="radio" asp-for="Gender" value="Male" class="form-check-input" />
+                        <label class="form-check-label">Male</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="radio" asp-for="Gender" value="Female" class="form-check-input" />
+                        <label class="form-check-label">Female</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="radio" asp-for="Gender" value="Other" class="form-check-input" />
+                        <label class="form-check-label">Other</label>
+                    </div>
+
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                    Register
+                </button>
+            </div>
+
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success mt-3">
+                @ViewBag.Message
+            </div>
+        }
+
+    </div>
+
+</div> *@
+
+
+
+@model registration.Models.UserMaster
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .register-wrapper {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2.5rem 1rem;
+    }
+
+    .register-card {
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(108,99,255,0.15);
+        border-radius: 28px;
+        box-shadow: 0 20px 60px rgba(108,99,255,0.14);
+        width: 100%;
+        max-width: 800px;
+        overflow: hidden;
+        animation: slideUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @@keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(32px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .reg-header {
+        background: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 50%, #38BDF8 100%);
+        padding: 2.2rem 2.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .reg-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .reg-header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: 30%;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+
+    .reg-header-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .reg-icon {
+        width: 52px;
+        height: 52px;
+        background: rgba(255,255,255,0.25);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .reg-title {
+        font-family: 'Syne', sans-serif;
+        color: white;
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .reg-sub {
+        color: rgba(255,255,255,0.75);
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .step-indicator {
+        display: flex;
+        gap: 6px;
+        position: absolute;
+        right: 2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .step-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.35);
+    }
+
+        .step-dot.active {
+            background: white;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+    .reg-body {
+        padding: 2.2rem 2.5rem;
+    }
+
+    .section-divider {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6C63FF;
+        background: linear-gradient(90deg, rgba(108,99,255,0.08), transparent);
+        padding: 0.4rem 0.8rem;
+        border-left: 3px solid #6C63FF;
+        border-radius: 0 6px 6px 0;
+        margin: 1.5rem 0 1.2rem;
+    }
+
+    .field-wrapper {
+        position: relative;
+        margin-bottom: 1.4rem;
+    }
+
+    .field-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #4A4A6A;
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+        .field-label i {
+            color: #6C63FF;
+            font-size: 0.85rem;
+        }
+
+    .field-input {
+        width: 100%;
+        border: 1.5px solid rgba(108,99,255,0.15);
+        border-radius: 12px;
+        padding: 0.65rem 1rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.9rem;
+        color: #1A1A2E;
+        background: #F6F7FB;
+        transition: all 0.25s ease;
+        outline: none;
+    }
+
+        .field-input:focus {
+            border-color: #6C63FF;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(108,99,255,0.1);
+        }
+
+    select.field-input {
+        cursor: pointer;
+    }
+
+    .text-danger {
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: #FF6B6B !important;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        margin-top: 0.3rem;
+    }
+
+    .gender-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .gender-option {
+        flex: 1;
+        min-width: 90px;
+        position: relative;
+    }
+
+        .gender-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .gender-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1rem;
+        border: 1.5px solid rgba(108,99,255,0.2);
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #4A4A6A;
+        transition: all 0.2s ease;
+        background: #F6F7FB;
+    }
+
+    .gender-option input:checked + .gender-label {
+        border-color: #6C63FF;
+        background: rgba(108,99,255,0.1);
+        color: #6C63FF;
+    }
+
+    .gender-label:hover {
+        border-color: #6C63FF;
+        background: rgba(108,99,255,0.06);
+    }
+
+    .btn-register {
+        width: 100%;
+        height: 52px;
+        background: linear-gradient(135deg, #6C63FF, #8B5CF6);
+        border: none;
+        border-radius: 14px;
+        color: white;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(108,99,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(108,99,255,0.4);
+        }
+
+            .btn-register:hover::before {
+                left: 100%;
+            }
+
+    .login-redirect {
+        text-align: center;
+        margin-top: 1.2rem;
+        font-size: 0.87rem;
+        color: #9898B5;
+        font-weight: 500;
+    }
+
+        .login-redirect a {
+            color: #6C63FF;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            .login-redirect a:hover {
+                text-decoration: underline;
+            }
+
+    .alert-success {
+        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+        border: 1px solid rgba(52,211,153,0.4);
+        border-radius: 12px;
+        color: #059669;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-card">
+        <!-- HEADER -->
+        <div class="reg-header">
+            <div class="reg-header-inner">
+                <div class="reg-icon">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <div>
+                    <h2 class="reg-title">Create Account</h2>
+                    <p class="reg-sub">Fill in the details below to get started</p>
+                </div>
+            </div>
+            <div class="step-indicator">
+                <div class="step-dot active"></div>
+                <div class="step-dot"></div>
+                <div class="step-dot"></div>
+            </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="reg-body">
+            <form method="post">
+                <!-- PERSONAL INFO -->
+                <div class="section-divider"><i class="bi bi-person me-1"></i>Personal Information</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-person"></i> Full Name</label>
+                            <input asp-for="FullName" class="field-input" placeholder="John Doe" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-at"></i> User Name</label>
+                            <input asp-for="UserName" class="field-input" placeholder="johndoe123" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-envelope"></i> Email Address</label>
+                            <input asp-for="EmailID" class="field-input" placeholder="john@example.com" />
+                            <span asp-validation-for="EmailID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-phone"></i> Mobile Number</label>
+                            <input asp-for="MobileNo" class="field-input" placeholder="+91 98765 43210" />
+                            <span asp-validation-for="MobileNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-calendar3"></i> Date of Birth</label>
+                            <input type="date" asp-for="DOB" class="field-input" />
+                            <span asp-validation-for="DOB" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                            <div class="gender-group">
+                                <div class="gender-option">
+                                    <input type="radio" asp-for="Gender" value="Male" id="gMale" />
+                                    <label class="gender-label" for="gMale"><i class="bi bi-gender-male"></i> Male</label>
+                                </div>
+                                <div class="gender-option">
+                                    <input type="radio" asp-for="Gender" value="Female" id="gFemale" />
+                                    <label class="gender-label" for="gFemale"><i class="bi bi-gender-female"></i> Female</label>
+                                </div>
+                                <div class="gender-option">
+                                    <input type="radio" asp-for="Gender" value="Other" id="gOther" />
+                                    <label class="gender-label" for="gOther"><i class="bi bi-person"></i> Other</label>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCOUNT SECURITY -->
+                <div class="section-divider"><i class="bi bi-lock me-1"></i>Account Security</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+
+                            <label class="field-label">
+                                <i class="bi bi-lock"></i> Password
+                            </label>
+
+                            <input type="password"
+                                   asp-for="Password"
+                                   id="password"
+                                   class="field-input"
+                                   placeholder="Enter Strong Password" />
+
+                            <span asp-validation-for="Password"
+                                  class="text-danger"></span>
+
+                            <div style="margin-top:12px;">
+
+                                <small id="strengthText"
+                                       style="font-weight:bold;color:#dc2626;">
+                                    Password Strength : Weak
+                                </small>
+
+                                <ul id="passwordRules"
+                                    style="margin-top:10px;padding-left:18px;font-size:13px;line-height:1.8;">
+
+                                    <li id="lengthRule">❌ Minimum 8 Characters</li>
+
+                                    <li id="upperRule">❌ One Uppercase Letter</li>
+
+                                    <li id="lowerRule">❌ One Lowercase Letter</li>
+
+                                    <li id="numberRule">❌ One Number</li>
+
+                                    <li id="specialRule">❌ One Special Character</li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-lock-fill"></i> Confirm Password</label>
+                            <input type="password" asp-for="ConfirmPassword" class="field-input" placeholder="Repeat password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="field-wrapper">
+                            <label class="field-label"><i class="bi bi-shield-check"></i> Role</label>
+                            <select asp-for="RoleId" class="form-select">
+
+                                <option value="">Select Role</option>
+
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    <option value="@role.RoleID">
+                                        @role.RoleName
+                                    </option>
+                                }
+
+                            </select>
+                            <span asp-validation-for="RoleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="bi bi-check2-circle"></i> Create My Account
+                </button>
+            </form>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert-success p-3">
+                    <i class="bi bi-check-circle-fill"></i>
+                    @ViewBag.Message
+                </div>
+            }
+
+            <div class="login-redirect">
+                Already have an account? <a asp-controller="Login" asp-action="Index">Sign in here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+        const password =
+        document.getElementById("password");
+
+        password.addEventListener("input",function(){
+
+        let value=this.value;
+
+        let length=value.length>=8;
+
+        let upper=/[A-Z]/.test(value);
+
+        let lower=/[a-z]/.test(value);
+
+        let number=/[0-9]/.test(value);
+
+        let special=/[!@@#$%^&*(),.?":{}|<>]/.test(value);
+
+        update("lengthRule",length);
+
+        update("upperRule",upper);
+
+        update("lowerRule",lower);
+
+        update("numberRule",number);
+
+        update("specialRule",special);
+
+        let score=0;
+
+        if(length) score++;
+
+        if(upper) score++;
+
+        if(lower) score++;
+
+        if(number) score++;
+
+        if(special) score++;
+
+        const text=
+        document.getElementById("strengthText");
+
+        if(score<=2)
+        {
+        text.innerHTML="🔴 Password Strength : Weak";
+        text.style.color="#dc2626";
+        }
+        else if(score==3 || score==4)
+        {
+        text.innerHTML="🟡 Password Strength : Medium";
+        text.style.color="#f59e0b";
+        }
+        else
+        {
+        text.innerHTML="🟢 Password Strength : Strong";
+        text.style.color="#16a34a";
+        }
+
+        });
+
+        function update(id,valid)
+        {
+        const rule=
+        document.getElementById(id);
+
+        if(valid)
+        {
+        rule.innerHTML=
+        "✅ "+rule.innerHTML.substring(2);
+
+        rule.style.color="#16a34a";
+        }
+        else
+        {
+        rule.innerHTML=
+        "❌ "+rule.innerHTML.substring(2);
+
+        rule.style.color="#dc2626";
+        }
+        }
+
+    </script>
+
+
+

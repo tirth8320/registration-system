@@ -1,0 +1,38 @@
+﻿# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Publish folder
+publish/
+
+# Environment files
+appsettings.Production.json
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Git
+.git
+
+# User secrets
+secrets.json

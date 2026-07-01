@@ -1,0 +1,200 @@
+﻿namespace registration.wwwroot.css {
+    public class errorlog {
+        /* ==========================================================
+   ERROR LOG MANAGEMENT
+========================================================== */
+
+        .page-title {
+            font-family: 'Syne',sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #1A1A2E;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+        /* ==========================
+   Dashboard Cards
+========================== */
+
+        .dashboard-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+            transition: .3s;
+            overflow: hidden;
+            height: 120px;
+            background: #fff;
+        }
+
+            .dashboard-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .dashboard-card .card-body {
+                padding: 20px;
+            }
+        /* ==========================
+   Small Cards
+========================== */
+
+        .dashboard-card-small {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 6px 15px rgba(0,0,0,.08);
+            background: #fff;
+        }
+
+            .dashboard-card-small .card-header {
+                background: white;
+                border: none;
+                font-weight: 700;
+            }
+
+            .dashboard-card-small .card-body {
+                padding: 20px;
+            }
+        /* ==========================
+   Table
+========================== */
+
+        .dashboard-table {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,.08);
+        }
+
+            .dashboard-table .card-header {
+                background: white;
+                border: none;
+                padding: 20px;
+            }
+        /* ==========================
+   Icons
+========================== */
+
+        .icon-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .icon-circle i {
+                font-size: 22px;
+            }
+
+        .bg-primary-subtle {
+            background: #e9f1ff;
+        }
+
+        .bg-danger-subtle {
+            background: #ffe7ea;
+        }
+
+        .bg-success-subtle {
+            background: #e6faf1;
+        }
+        /* ==========================
+   Search
+========================== */
+
+        .search-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        }
+
+            .search-card .form-control {
+                height: 45px;
+                border-radius: 10px;
+            }
+
+            .search-card .form-select {
+                height: 45px;
+                border-radius: 10px;
+            }
+
+            .search-card .btn {
+                height: 45px;
+                border-radius: 10px;
+            }
+        /* ==========================
+   Statistics
+========================== */
+
+        .stat-title {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+        /* ==========================
+   Table
+========================== */
+
+        .table thead {
+            background: #F7F8FD;
+        }
+
+        .table th {
+            font-size: 14px;
+            color: #7B7B7B;
+            font-weight: 700;
+        }
+
+        .table td {
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        /* ==========================
+   Buttons
+========================== */
+
+        .btn {
+            border-radius: 10px;
+        }
+
+        .btn-group .btn {
+            width: 38px;
+            height: 38px;
+        }
+        /* ==========================
+   Cards
+========================== */
+
+        .card {
+            margin-bottom: 20px;
+        }
+        /* ==========================
+   Analytics
+========================== */
+
+        .analytics-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        /* ==========================
+   Responsive
+========================== */
+
+        @media(max-width:768px) {
+
+            .dashboard-card {
+                height: auto;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+        }
+    }
+}

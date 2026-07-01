@@ -1,0 +1,556 @@
+﻿@model List<UserDocument>
+
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<style>
+
+    .dashboard-wrapper {
+        padding: 0.5rem 0 2rem;
+    }
+
+    .dashboard-hero {
+        background: linear-gradient(135deg,#6C63FF 0%,#8B5CF6 50%,#38BDF8 100%);
+        border-radius: 24px;
+        padding: 2.8rem 3rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        box-shadow: 0 15px 50px rgba(108,99,255,.3);
+    }
+
+        .dashboard-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.1);
+        }
+
+        .dashboard-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 20%;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.07);
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-label {
+        color: rgba(255,255,255,.7);
+        font-size: .9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .hero-title {
+        color: white;
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 10px 0;
+    }
+
+    .hero-desc {
+        color: rgba(255,255,255,.85);
+        max-width: 600px;
+        font-size: 1rem;
+    }
+
+    .hero-badge {
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
+
+    .hero-badge-inner {
+        background: rgba(255,255,255,.18);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,.25);
+        border-radius: 22px;
+        padding: 30px;
+        text-align: center;
+        color: white;
+        min-width: 170px;
+    }
+
+        .hero-badge-inner i {
+            font-size: 3rem;
+        }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #1A1A2E;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 22px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(108,99,255,.08);
+        border: 1px solid rgba(108,99,255,.08);
+        transition: .3s;
+        height: 100%;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .violet {
+        background: rgba(108,99,255,.12);
+        color: #6C63FF;
+    }
+
+    .green {
+        background: rgba(34,197,94,.12);
+        color: #22c55e;
+    }
+
+    .red {
+        background: rgba(239,68,68,.12);
+        color: #ef4444;
+    }
+
+    .yellow {
+        background: rgba(245,158,11,.12);
+        color: #f59e0b;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1A1A2E;
+    }
+
+    .stat-label {
+        color: #9898B5;
+        font-weight: 600;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(108,99,255,.08);
+        box-shadow: 0 8px 20px rgba(108,99,255,.06);
+        text-decoration: none;
+        display: block;
+        transition: .3s;
+        height: 100%;
+    }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .action-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .action-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1A1A2E;
+    }
+
+    .action-desc {
+        color: #9898B5;
+        font-size: .9rem;
+    }
+
+</style>
+
+<div class="dashboard-wrapper">
+
+    <div class="dashboard-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-label">
+                ADMIN CONTROL CENTER
+            </div>
+
+            <h1 class="hero-title">
+                Dashboard Overview
+            </h1>
+
+            <p class="hero-desc">
+                Monitor users, document verification requests,
+                approvals and rejections from one place.
+            </p>
+
+        </div>
+
+        <div class="hero-badge">
+
+            <div class="hero-badge-inner">
+
+                <i class="bi bi-shield-check"></i>
+
+                <div class="mt-2 fw-bold">
+                    Admin Access
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <h2 class="section-title">
+        Statistics
+    </h2>
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon violet">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <div class="stat-value">
+                    @ViewBag.TotalUsers
+                </div>
+
+                <div class="stat-label">
+                    Total Users
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <div class="stat-value">
+                    @ViewBag.PendingDocuments
+                </div>
+
+                <div class="stat-label">
+                    Pending Review
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+
+                <div class="stat-value">
+                    @ViewBag.ApprovedDocuments
+                </div>
+
+                <div class="stat-label">
+                    Approved
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon red">
+                    <i class="bi bi-x-circle-fill"></i>
+                </div>
+
+                <div class="stat-value">
+                    @ViewBag.RejectedDocuments
+                </div>
+
+                <div class="stat-label">
+                    Rejected
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <a asp-controller="ErrorLog"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        <i class="bi bi-bug-fill"></i>
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.TotalErrors
+                    </div>
+
+                    <div class="stat-label">
+                        Error Logs
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+        <div class="col-md-3">
+
+            <a asp-controller="ErrorLog"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon violet">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+
+                    <div class="stat-value">
+                        @ViewBag.NewErrors
+                    </div>
+
+                    <div class="stat-label">
+                        New Errors
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <h1 style="color:red">
+        MODEL COUNT = @Model.Count
+    </h1>
+
+    <h2 class="section-title mt-5">
+        Recent Uploads
+    </h2>
+
+    <div class="card border-0 shadow-sm mb-5">
+
+        <div class="card-body">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>User ID</th>
+                        <th>Status</th>
+                        <th>Uploaded</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.UserId
+                            </td>
+
+                            <td>
+
+                                @if (item.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">
+                                        Approved
+                                    </span>
+                                }
+                                else if (item.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">
+                                        Rejected
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">
+                                        Pending
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+                                @item.UploadedDate
+                            </td>
+
+                            <td>
+
+                                <a asp-controller="Admin"
+                                   asp-action="DocumentVerification"
+                                   class="btn btn-sm btn-primary">
+
+                                    Review
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+        Quick Actions
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <a asp-controller="Admin"
+               asp-action="UserList"
+               class="action-card">
+
+                <div class="action-icon violet">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <div class="action-title">
+                    User Management
+                </div>
+
+                <div class="action-desc">
+                    View and manage registered users.
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <a asp-controller="Admin"
+               asp-action="DocumentVerification"
+               class="action-card">
+
+                <div class="action-icon green">
+                    <i class="bi bi-file-earmark-check"></i>
+                </div>
+
+                <div class="action-title">
+                    Document Verification
+                </div>
+
+                <div class="action-desc">
+                    Review pending documents.
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <a asp-controller="Role"
+               asp-action="Index"
+               class="action-card">
+
+                <div class="action-icon yellow">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+
+                <div class="action-title">
+                    Role Management
+                </div>
+
+                <div class="action-desc">
+                    Create and manage user roles.
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <a asp-controller="ErrorLog"
+               asp-action="Index"
+               class="action-card">
+
+                <div class="action-icon red">
+                    <i class="bi bi-bug-fill"></i>
+                </div>
+
+                <div class="action-title">
+                    Error Logs
+                </div>
+
+                <div class="action-desc">
+                    View application errors and monitor system issues.
+                </div>
+
+            </a>
+
+        </div>
+    </div>
+
+</div>
