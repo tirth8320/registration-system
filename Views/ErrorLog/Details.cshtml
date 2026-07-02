@@ -272,3 +272,47 @@
     </div>
 
 </div>
+
+<style>
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .container-fluid .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table th,
+        .table td {
+            display: block;
+            width: 100%;
+            padding: 0.35rem 0;
+            border: 0;
+        }
+
+        .btn {
+            width: 100%;
+            min-height: 48px;
+            margin-bottom: 0.5rem;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        h2 {
+            font-size: 1.35rem;
+        }
+    }
+</style>

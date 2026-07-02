@@ -308,6 +308,76 @@
             display: block;
         }
 
+    @@media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .table-card {
+            border-radius: 14px;
+        }
+
+        .table-card thead th,
+        .table-card tbody td {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        .action-btns {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            min-height: 48px;
+        }
+
+        .table-footer {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .user-count-pill {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .action-btns {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 </style>
 
 <div class="page-header">

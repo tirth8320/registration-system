@@ -153,15 +153,72 @@
         background: linear-gradient(135deg,#6C63FF,#8B5CF6);
     }
 
-    @@media(max-width:992px) {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .upload-container {
+            width: 100%;
+            padding: 0 0.5rem;
+        }
+
+        .upload-card {
+            padding: 1rem;
+        }
+
+        .upload-title {
+            font-size: 1.6rem;
+        }
+
         .document-grid {
-            grid-template-columns: repeat(2,1fr);
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .document-box {
+            padding: 1rem;
+        }
+
+        .document-title {
+            font-size: 1rem;
+        }
+
+        .drop-zone,
+        .document-name,
+        .drop-zone__input {
+            width: 100%;
+        }
+
+        .submit-btn,
+        .btn {
+            width: 100%;
+            min-height: 48px;
+        }
+
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 0.5rem;
         }
     }
 
-    @@media(max-width:768px) {
-        .document-grid {
-            grid-template-columns: 1fr;
+    @@media (max-width: 576px) {
+        .upload-title {
+            font-size: 1.35rem;
+        }
+
+        .upload-subtitle {
+            font-size: 0.85rem;
+        }
+
+        .add-document-icon {
+            font-size: 44px;
+        }
+
+        .add-document-text {
+            font-size: 1rem;
         }
     }
 

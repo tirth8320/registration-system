@@ -308,6 +308,80 @@
         background: transparent;
     }
 
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .title-wrapper {
+            width: 100%;
+        }
+
+        .page-pill {
+            width: 100%;
+            text-align: center;
+        }
+
+        .search-card .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .search-card .form-control,
+        .search-card .form-select {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .search-card .btn,
+        .btn {
+            min-height: 48px;
+        }
+
+        .stats-card {
+            padding: 16px;
+        }
+
+        .analytics-card {
+            height: auto;
+            min-height: 240px;
+        }
+
+        .table-scroll {
+            max-height: none;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px 8px;
+            font-size: 0.82rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .title-icon {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+        }
+
+        .page-subtitle {
+            font-size: 0.82rem;
+        }
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -805,6 +879,8 @@
     </div>
 
     <div class="table-scroll">
+        <div class="table-responsive">
+
 
         <table class="table table-hover align-middle mb-0">
 
@@ -1040,10 +1116,9 @@
         </div>
 
     </div>
+    </div>
 
 </div>
-
-        </td>
 
 
 <script>

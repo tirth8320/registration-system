@@ -193,6 +193,59 @@
         font-size: .9rem;
     }
 
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-hero {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .hero-badge {
+            display: none;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+        }
+
+        .hero-desc {
+            font-size: 0.9rem;
+        }
+
+        .dashboard-wrapper .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .stat-card,
+        .action-card {
+            width: 100%;
+        }
+
+        .card-body .btn {
+            width: 100%;
+            min-height: 48px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .hero-title {
+            font-size: 1.4rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+        }
+    }
+
 </style>
 
 <div class="dashboard-wrapper">
@@ -382,8 +435,8 @@
     <div class="card border-0 shadow-sm mb-5">
 
         <div class="card-body">
-
-            <table class="table align-middle">
+            <div class="table-responsive">
+                <table class="table align-middle">
 
                 <thead>
 
@@ -450,7 +503,8 @@
 
                 </tbody>
 
-            </table>
+                </table>
+            </div>
 
         </div>
 

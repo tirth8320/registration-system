@@ -430,6 +430,93 @@
         font-size: 0.9rem;
         margin-top: 1rem;
     }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .register-wrapper {
+            padding: 1rem 0.5rem;
+        }
+
+        .register-card {
+            width: 95%;
+            max-width: 95%;
+            margin: 0 auto;
+        }
+
+        .reg-header {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .reg-header-inner {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .reg-title {
+            font-size: 1.3rem;
+        }
+
+        .step-indicator {
+            display: none;
+        }
+
+        .reg-body {
+            padding: 1.25rem;
+        }
+
+        .register-card .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .field-input,
+        .form-select {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .gender-group {
+            flex-direction: column;
+        }
+
+        .gender-option {
+            min-width: 100%;
+        }
+
+        .btn-register {
+            width: 100%;
+            min-height: 48px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .register-wrapper {
+            padding: 0.75rem 0.25rem;
+        }
+
+        .reg-header {
+            padding: 1.25rem 1rem;
+        }
+
+        .reg-icon {
+            width: 44px;
+            height: 44px;
+            font-size: 1.1rem;
+        }
+
+        .reg-title {
+            font-size: 1.1rem;
+        }
+
+        .reg-body {
+            padding: 1rem;
+        }
+    }
 </style>
 
 <div class="register-wrapper">

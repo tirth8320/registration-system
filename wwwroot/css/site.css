@@ -29,3 +29,156 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* ==========================
+   MOBILE RESPONSIVE
+========================== */
+
+@media only screen and (max-width:768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Containers */
+
+    .container,
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Sidebar */
+
+    .sidebar {
+        position: fixed;
+        left: -270px;
+        top: 0;
+        width: 260px;
+        height: 100%;
+        z-index: 9999;
+        transition: .3s;
+    }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+    /* Content */
+
+    .main-content,
+    .content,
+    .wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Navbar */
+
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    /* Cards */
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    /* Forms */
+
+    input,
+    select,
+    textarea,
+    button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Tables */
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    /* Images */
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Hero */
+
+    .hero,
+    .banner {
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Dashboard Cards */
+
+    .dashboard-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Login */
+
+    .login-box {
+        width: 95%;
+        margin: auto;
+    }
+
+    /* Register */
+
+    .register-box {
+        width: 95%;
+        margin: auto;
+    }
+
+    /* Modal */
+
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    /* Buttons */
+
+    button {
+        min-height: 45px;
+    }
+
+    /* Text */
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+}

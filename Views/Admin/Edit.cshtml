@@ -526,6 +526,70 @@
             .btn-update:hover::before {
                 left: 100%;
             }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .edit-wrapper {
+            padding: 0.5rem 0 1.5rem;
+        }
+
+        .edit-header {
+            padding: 1.2rem 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .edit-body {
+            padding: 1rem;
+        }
+
+        .edit-footer {
+            padding: 1rem;
+            flex-direction: column;
+        }
+
+        .edit-body .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .field-input,
+        .form-select {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .btn-back,
+        .btn-update {
+            width: 100%;
+            justify-content: center;
+            min-height: 48px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .edit-card {
+            border-radius: 16px;
+        }
+
+        .edit-header-title {
+            font-size: 1.2rem;
+        }
+
+        .gender-row {
+            flex-direction: column;
+        }
+
+        .gender-pill {
+            min-width: 100%;
+        }
+    }
 </style>
 
 <div class="edit-wrapper">

@@ -18,6 +18,7 @@
 @using Microsoft.AspNetCore.Http
 
 <style>
+
     .home-wrapper {
         padding: 0.5rem 0 2rem;
     }
@@ -420,17 +421,87 @@
             text-decoration: none;
         }
 
-    @@media(max - width:768px) {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .welcome-hero {
+            padding: 1.5rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
         .hero-badge {
             display: none;
         }
 
         .hero-title {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
-        .welcome-hero {
-            padding: 2rem 1.5rem;
+        .hero-desc {
+            font-size: 0.88rem;
+            max-width: 100%;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+        }
+
+        .hero-btn-primary,
+        .hero-btn-ghost {
+            width: 100%;
+            justify-content: center;
+            min-height: 48px;
+        }
+
+        .home-wrapper .row > [class*="col-"] {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .stat-card {
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .action-card {
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-banner {
+            flex-direction: column;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .hero-title {
+            font-size: 1.25rem;
+        }
+
+        .hero-greeting {
+            font-size: 0.76rem;
+        }
+
+        .stat-value {
+            font-size: 1.35rem;
+        }
+
+        .stat-card {
+            padding: 1rem;
+        }
+
+        .action-card {
+            padding: 1rem;
         }
     }
 </style>

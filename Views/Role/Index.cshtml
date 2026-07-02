@@ -289,6 +289,54 @@
             margin-bottom: 1rem;
             display: block;
         }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .search-wrapper {
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .table-card thead th,
+        .table-card tbody td {
+            padding: 0.65rem 0.7rem;
+        }
+
+        .action-btns {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            min-height: 48px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .action-btns {
+            flex-direction: column;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 </style>
 @* @model List<registration.Models.RoleMaster> *@
 
